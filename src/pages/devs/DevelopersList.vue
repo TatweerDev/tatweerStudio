@@ -3,21 +3,34 @@
     FILTER
   </section>
   <section>
-    <div>
-      <button>Refresh</button>
-      <router-link to="/register">Register as a Developer</router-link>
-    </div>
-    <ul v-if="hasDevelopers">
-      <li v-for="dev in filteredDevs" :key="dev.id">
-        {{ dev.firstName }}
-      </li>
-    </ul>
-    <h3 v-else>There is no Developers found</h3>
+    <base-card>
+      <div>
+        <base-button>Refresh</base-button>
+        <base-button link to="/register" mode="white">Register as a Developer</base-button>
+      </div>
+      <ul v-if="hasDevelopers">
+        <developer-item 
+          v-for="dev in filteredDevs"
+          :key="dev.id"
+          :id="dev.id"
+          :first-name="dev.firstName"
+          :last-name="dev.lastName"
+          :rate="dev.hourlyRate"
+          :areas="dev.areas"
+          >
+        </developer-item>
+      </ul>
+      <h3 v-else>There is no Developers found</h3>
+    </base-card>
   </section>
 </template>
 
 <script>
+import DeveloperItem from '../../components/developers/DeveloperItem.vue'
 export default {
+  components: {
+    DeveloperItem
+  },
   computed: {
     filteredDevs() {
       return this.$store.getters['devs/developers'];

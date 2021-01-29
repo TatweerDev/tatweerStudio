@@ -31,7 +31,7 @@ body {
   color: #fff;
   background-image: url("img/bg1.jpg");
   background-repeat: no-repeat;
-  background-position: fixed;
+  background-position: fixed !important;
   background-size: 100%;
   background-color: #000;
 }
