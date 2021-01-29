@@ -1,6 +1,6 @@
 <template>
   <section>
-    FILTER
+    <developer-filter @change-filter="setFilters"></developer-filter>
   </section>
   <section>
     <base-card>
@@ -26,17 +26,49 @@
 </template>
 
 <script>
-import DeveloperItem from '../../components/developers/DeveloperItem.vue'
+import DeveloperItem from '../../components/developers/DeveloperItem.vue';
+import DeveloperFilter from '../../components/developers/DevloperFilter.vue'
 export default {
   components: {
-    DeveloperItem
+    DeveloperItem,
+    DeveloperFilter
+  },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        design: true,
+        apps: true
+      }
+    }
   },
   computed: {
     filteredDevs() {
-      return this.$store.getters['devs/developers'];
+      const devs = this.$store.getters['devs/developers'];
+      return devs.filter(dev => {
+        if (this.activeFilters.frontend && dev.areas.includes('frontend')) {
+          return true
+        }
+        if (this.activeFilters.backend && dev.areas.includes('backend')) {
+          return true
+        }
+        if (this.activeFilters.design && dev.areas.includes('design')) {
+          return true
+        }
+        if (this.activeFilters.apps && dev.areas.includes('apps')) {
+          return true
+        }
+        return false
+      })
     },
     hasDevelopers() {
       return this.$store.getters['devs/hasDevelopers'];
+    }
+  },
+  methods: {
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
     }
   }
 }
