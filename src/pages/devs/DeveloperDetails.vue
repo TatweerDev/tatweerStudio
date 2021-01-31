@@ -16,7 +16,7 @@
     <base-card>
       <header>
         <h2>If you intersted - contact me now!</h2>
-        <base-button link :to="contacLink">Contact</base-button>
+        <base-button link :to="contactLink">Contact</base-button>
       </header>
       <router-view></router-view>
     </base-card>
@@ -36,7 +36,7 @@ export default {
       return this.selectedDev.firstName + ' ' + this.selectedDev.lastName;
     },
     contactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
+      return this.$route.path + '/contact';
     },
     areas() {
       return this.selectedDev.areas;
