@@ -8,7 +8,7 @@
       <label for="message">Message</label>
       <textarea id="message" rows="5" v-model.trim="message"></textarea>
     </div>
-    <p class="errors" v-if="!formIsValid">Please enter valid email and write your message</p>
+    <p class="errors" v-if="!formIsvalid">Please enter valid email and write your message</p>
     <div class="actions">
       <base-button>Send Message</base-button>
     </div>
@@ -21,17 +21,22 @@ export default {
     return {
       email: '',
       message: '',
-      formIsvalid: true
+      formIsvalid: true,
     }
   },
   methods: {
     submitForm() {
       this.formIsvalid = true;
-      if (this.emil === '' || !this.email.includes('@') || this.message === '') {
+      if (this.email === '' || !this.email.includes('@') || this.message === '') {
         this.formIsvalid = false;
         return;
       }
-      
+      this.$store.dispatch('requests/contactDev', {
+        email: this.email,
+        message: this.message,
+        coachId: this.$route.params.id
+      });
+      this.$router.replace('/devs')
     }
   }
 }
@@ -63,12 +68,13 @@ textarea {
   border: 1px solid #ccc;
   padding: 0.15rem;
   margin-bottom: 0.5rem;
+  background-color: #ffffff8e;
 }
 
 input:focus,
 textarea:focus {
-  border-color: #3d008d;
-  background-color: #faf6ff;
+  border-color: #c5b314;
+  background-color: #fdfcafc4;
   outline: none;
 }
 
