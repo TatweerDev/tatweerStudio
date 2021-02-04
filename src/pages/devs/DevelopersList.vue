@@ -5,7 +5,7 @@
   <section>
     <base-card>
       <div>
-        <base-button>Refresh</base-button>
+        <base-button @click="loadDevelopers">Refresh</base-button>
         <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
       </div>
       <ul v-if="hasDevelopers">
@@ -69,9 +69,15 @@ export default {
       return this.$store.getters['devs/isDev'];
     }
   },
+  created() {
+    this.loadDevelopers();
+  },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+    },
+    loadDevelopers() {
+      this.$store.dispatch('devs/loadDevelopers');
     }
   }
 }

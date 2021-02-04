@@ -4,20 +4,21 @@
       <header>
         <h2>Messages recieved</h2>
       </header>
-      <ul v-if="!hasRequests">
+      <ul v-if="hasRequests">
         <request-item
           v-for="req in recievedRequests"
           :key="req.id"
           :email="req.userMail"
           :message="req.message"
         ></request-item></ul>
-      <h3 v-if="hasRequests">You haven't recieved any mesages yet...</h3>
+      <h3 v-if="!hasRequests">You haven't recieved any mesages yet...</h3>
     </base-card>
   </section>
 </template>
 
 <script>
-import RequestItem from '../../components/requests/RequestItem.vue'
+import RequestItem from '../../components/requests/RequestItem.vue';
+
 export default {
   components: {
     RequestItem

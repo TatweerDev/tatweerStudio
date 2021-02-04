@@ -1,7 +1,7 @@
 export default {
-  registerDeveloper(context, data) {
+  async registerDeveloper(context, data) {
+    const userId = context.rootGetters.userId;
     const devData = {
-      id: context.rootGetters.userId,
       firstName: data.first,
       lastName: data.last,
       description: data.desc,
@@ -10,6 +10,46 @@ export default {
       areas: data.areas
     };
 
-    context.commit('registerDeveloper', devData);
+    const response = await fetch(`https://tatweer-studio-default-rtdb.firebaseio.com/developers/${userId}.json`, {
+      method: 'PUT',
+      body: JSON.stringify(devData)
+    });
+
+    // const responseData = await response.json();
+
+    if (!response.ok) {
+      //error
+    }
+
+    context.commit('registerDeveloper', {
+      ...devData,
+      id: userId
+    });
+  },
+  async loadDevelopers(context) {
+    const response = await fetch(
+      `https://tatweer-studio-default-rtdb.firebaseio.com/developers.json`
+    );
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      // ...
+    }
+
+    const developers = [];
+
+    for (const key in responseData) {
+      const developer = {
+        id: key,
+        firstName: responseData[key].firstName,
+        lastName: responseData[key].lastName,
+        description: responseData[key].description,
+        portfolio: responseData[key].portfolio,
+        hourlyRate: responseData[key].hourlyRate,
+        areas: responseData[key].areas
+      };
+      developers.push(developer);
+    }
+    context.commit('setDevelopers', developers);
   }
 };
