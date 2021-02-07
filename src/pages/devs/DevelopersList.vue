@@ -1,28 +1,36 @@
 <template>
-  <section>
-    <developer-filter @change-filter="setFilters"></developer-filter>
-  </section>
-  <section>
-    <base-card>
-      <div>
-        <base-button @click="loadDevelopers">Refresh</base-button>
-        <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
-      </div>
-      <ul v-if="hasDevelopers">
-        <developer-item 
-          v-for="dev in filteredDevs"
-          :key="dev.id"
-          :id="dev.id"
-          :first-name="dev.firstName"
-          :last-name="dev.lastName"
-          :rate="dev.hourlyRate"
-          :areas="dev.areas"
-          >
-        </developer-item>
-      </ul>
-      <h3 v-else>There is no Developers found</h3>
-    </base-card>
-  </section>
+  <div> 
+    <base-dialog :show="!!error" title="An error occured" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <developer-filter @change-filter="setFilters"></developer-filter>
+    </section>
+    <section>
+      <base-card>
+        <div>
+          <base-button @click="loadDevelopers(true)">Refresh</base-button>
+          <base-button v-if="!isDev && !isLoading" link to="/register" mode="white">Register as a Developer</base-button>
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-if="hasDevelopers">
+          <developer-item 
+            v-for="dev in filteredDevs"
+            :key="dev.id"
+            :id="dev.id"
+            :first-name="dev.firstName"
+            :last-name="dev.lastName"
+            :rate="dev.hourlyRate"
+            :areas="dev.areas"
+            >
+          </developer-item>
+        </ul>
+        <h3 v-else>There is no Developers found</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -35,6 +43,8 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -63,7 +73,7 @@ export default {
       })
     },
     hasDevelopers() {
-      return this.$store.getters['devs/hasDevelopers'];
+      return !this.isLoading && this.$store.getters['devs/hasDevelopers'];
     },
      isDev() {
       return this.$store.getters['devs/isDev'];
@@ -76,8 +86,17 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadDevelopers() {
-      this.$store.dispatch('devs/loadDevelopers');
+    async loadDevelopers(refresh = false) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('devs/loadDevelopers', {forceRefresh: refresh});
+      } catch (error) {
+        this.error = error.message || 'Something went wrong...'
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     }
   }
 }

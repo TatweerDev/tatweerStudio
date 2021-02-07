@@ -26,14 +26,19 @@ export default {
       id: userId
     });
   },
-  async loadDevelopers(context) {
+  async loadDevelopers(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const response = await fetch(
       `https://tatweer-studio-default-rtdb.firebaseio.com/developers.json`
     );
     const responseData = await response.json();
 
     if (!response.ok) {
-      // ...
+      const error = new Error(responseData.message || 'Failed to send');
+      throw error;
     }
 
     const developers = [];
@@ -51,5 +56,6 @@ export default {
       developers.push(developer);
     }
     context.commit('setDevelopers', developers);
+    context.commit('setFatchTimestamp');
   }
 };

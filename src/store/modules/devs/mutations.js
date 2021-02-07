@@ -4,5 +4,8 @@ export default {
   },
   setDevelopers(state, payload) {
     state.developers = payload;
+  },
+  setFatchTimestamp(state) {
+    state.lastFetch = new Date().getTime();
   }
 };
