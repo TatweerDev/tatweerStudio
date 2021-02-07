@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import DevDetails from './pages/devs/DeveloperDetails.vue'
-import DevList from './pages/devs/DevelopersList.vue'
-import DevRegistration from './pages/devs/DevRegistration.vue'
-import ContactDev from './pages/requests/ContactDev.vue'
-import RequestsRecieved from './pages/requests/RequestsRecieved.vue'
-import NotFound from './pages/NotFound.vue'
+import DevDetails from './pages/devs/DeveloperDetails.vue';
+import DevList from './pages/devs/DevelopersList.vue';
+import DevRegistration from './pages/devs/DevRegistration.vue';
+import ContactDev from './pages/requests/ContactDev.vue';
+import RequestsRecieved from './pages/requests/RequestsRecieved.vue';
+import NotFound from './pages/NotFound.vue';
+import UserAuth from './pages/auth/UserAuth.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,7 +22,8 @@ const router = createRouter({
     },
     { path: '/register', component: DevRegistration },
     { path: '/requests', component: RequestsRecieved },
-    { path: '/:notFound(.*)', component: NotFound },
+    { path: '/auth', component: UserAuth },
+    { path: '/:notFound(.*)', component: NotFound }
   ]
 });
 
