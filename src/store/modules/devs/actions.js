@@ -33,8 +33,11 @@ export default {
 
     const response = await fetch(
       `https://tatweer-studio-default-rtdb.firebaseio.com/developers.json`
+      
+      // 'http://1dfa8511f31c.ngrok.io/api/v1/dev/'
     );
     const responseData = await response.json();
+    console.log(responseData)
 
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to send');
