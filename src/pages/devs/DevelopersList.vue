@@ -1,28 +1,30 @@
 <template>
-  <section>
-    <developer-filter @change-filter="setFilters"></developer-filter>
-  </section>
-  <section>
-    <base-card>
-      <div>
-        <base-button>Refresh</base-button>
-        <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
-      </div>
-      <ul v-if="hasDevelopers">
-        <developer-item 
-          v-for="dev in filteredDevs"
-          :key="dev.id"
-          :id="dev.id"
-          :first-name="dev.firstName"
-          :last-name="dev.lastName"
-          :rate="dev.hourlyRate"
-          :areas="dev.areas"
-          >
-        </developer-item>
-      </ul>
-      <h3 v-else>There is no Developers found</h3>
-    </base-card>
-  </section>
+  <div>
+    <section>
+      <developer-filter @change-filter="setFilters"></developer-filter>
+    </section>
+    <section>
+      <base-card>
+        <div>
+          <base-button>Refresh</base-button>
+          <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
+        </div>
+        <ul v-if="hasDevelopers">
+          <developer-item 
+            v-for="dev in filteredDevs"
+            :key="dev.id"
+            :id="dev.id"
+            :first-name="dev.firstName"
+            :last-name="dev.lastName"
+            :rate="dev.hourlyRate"
+            :areas="dev.areas"
+            >
+          </developer-item>
+        </ul>
+        <h3 v-else>There is no Developers found</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>

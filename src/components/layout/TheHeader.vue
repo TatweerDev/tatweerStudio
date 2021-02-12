@@ -1,21 +1,35 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/">Tatweer Development Studio</router-link></h1>
+        <h1>
+          <router-link to="/">
+            <logo-animation></logo-animation>
+            Tatweer Development Studio
+          </router-link>
+        </h1>
       <ul>
         <li>
           <router-link to="/devs">All developers</router-link>
-          <router-link to="/requests">Requests</router-link>
+          <router-link to="/auth">Login</router-link>
         </li>
       </ul>
     </nav>
   </header>
 </template>
 
+<script>
+import LogoAnimaition from './LogoAnimation.vue'
+export default {
+  components: {
+    'logo-animation' : LogoAnimaition
+  }  
+}
+</script>
+
 <style scoped>
 header {
   width: 100%;
-  height: 5rem;
+  height: 6.6rem;
   background: linear-gradient(148deg, rgba(184,116,15,1) 0%, rgba(247,208,8,1) 100%);
   display: flex;
   justify-content: center;
@@ -42,9 +56,11 @@ h1 {
 }
 
 h1 a {
+  display: flex;
   color: white;
   margin: 0;
   text-shadow: 0px 0px 13px rgb(0 0 0 / 89%);
+  align-items: center;
 }
 
 h1 a:hover,
@@ -72,5 +88,10 @@ header ul {
 
 li {
   margin: 0 0.5rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
 }
 </style>

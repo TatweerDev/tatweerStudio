@@ -1,6 +1,10 @@
 <template>
   <the-header></the-header>
-  <router-view></router-view>
+  <router-view v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+  </router-view>
 </template>
 
 <script>
@@ -29,10 +33,9 @@ body {
   margin: 0;
 
   color: #fff;
-  background-image: url("img/bg1.jpg");
+  background: url("img/bg1.jpg")fixed center;
   background-repeat: no-repeat;
-  background-position: fixed !important;
-  background-size: 100%;
+  background-size: cover;
   background-color: #000;
 }
 

@@ -65,7 +65,7 @@
         <label for="design">Interface  design</label>
       </div>
       <div>
-        <input type="checkbox" id="apps" value="apps" v-model="areas" @blur="clearValidity('areas')">
+        <input type="checkbox" id="apps" value="apps" v-model="areas.val" @blur="clearValidity('areas')">
         <label for="apps">Appication development</label>
       </div>
       <p v-if="!areas.isValid">At least one expertise must be selected</p>
