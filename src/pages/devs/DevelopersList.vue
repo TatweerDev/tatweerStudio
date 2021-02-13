@@ -1,39 +1,50 @@
 <template>
-  <div>
-    <section>
-      <developer-filter @change-filter="setFilters"></developer-filter>
-    </section>
-    <section>
-      <base-card>
-        <div>
-          <base-button>Refresh</base-button>
-          <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
-        </div>
-        <ul v-if="hasDevelopers">
-          <developer-item 
-            v-for="dev in filteredDevs"
-            :key="dev.id"
-            :id="dev.id"
-            :first-name="dev.firstName"
-            :last-name="dev.lastName"
-            :rate="dev.hourlyRate"
-            :areas="dev.areas"
-            >
-          </developer-item>
-        </ul>
-        <h3 v-else>There is no Developers found</h3>
+  <div class="wrapper">
+    <div>
+      <base-card mode="desc">
+        <desc-item></desc-item>
       </base-card>
-    </section>
+    </div>
+    <div>
+      <section>
+        <developer-filter @change-filter="setFilters"></developer-filter>
+      </section>
+      <section>
+        <base-card>
+          <div>
+            <base-button @click="loadDevelopers">Refresh</base-button>
+            <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
+          </div>
+          <ul >
+            <developer-item 
+              v-for="dev in developers"
+              :key="dev.id"
+              :id="dev.id"
+              :first-name="dev.firstName"
+              :last-name="dev.lastName"
+              :rate="dev.hourlyRate"
+              :areas="dev.areas"
+              >
+            </developer-item>
+          </ul>
+          <!-- <h3 v-else>There is no Developers found</h3> -->
+        </base-card>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
 import DeveloperItem from '../../components/developers/DeveloperItem.vue';
-import DeveloperFilter from '../../components/developers/DevloperFilter.vue'
+import DeveloperFilter from '../../components/developers/DevloperFilter.vue';
+import BaseCard from '../../components/ui/BaseCard.vue';
+import DescItem from '../../components/layout/TheDescripton.vue';
 export default {
   components: {
     DeveloperItem,
-    DeveloperFilter
+    DeveloperFilter,
+    BaseCard,
+    DescItem
   },
   data() {
     return {
@@ -41,14 +52,15 @@ export default {
         frontend: true,
         backend: true,
         design: true,
-        apps: true
-      }
+        apps: true,
+      },
+      developers: this.$store.getters['devs/developers']
     }
   },
   computed: {
     filteredDevs() {
-      const devs = this.$store.getters['devs/developers'];
-      return devs.filter(dev => {
+      const developers = this.$store.getters['devs/developers'];
+      return developers.filter(dev => {
         if (this.activeFilters.frontend && dev.areas.includes('frontend')) {
           return true
         }
@@ -71,9 +83,19 @@ export default {
       return this.$store.getters['devs/isDev'];
     }
   },
+  created() {
+    this.loadDevelopers()
+  },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+    },
+    async loadDevelopers() {
+      try {
+        await this.$store.dispatch('devs/loadDevelopers');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong'
+      }
     }
   }
 }
@@ -90,4 +112,11 @@ ul {
   display: flex;
   justify-content: space-between;
 }
+
+.wrapper {
+  display: flex;
+  margin: 0 60px;
+  justify-content: space-between;
+}
+
 </style>

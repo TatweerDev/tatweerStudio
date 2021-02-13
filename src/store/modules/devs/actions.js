@@ -26,5 +26,31 @@ export default {
       ...devData,
       id: userId
     });
+  },
+  async loadDevelopers(context) {
+    const response = await fetch('http://192.168.1.2:8001/api/v1/');
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error('Failed to get data')
+    }
+
+    const developers = [];
+
+    for(const key in responseData) {
+      const developer = {
+      id: key,
+      firstName: responseData[key].firstName,
+      lastName: responseData[key].lastName,
+      description: responseData[key].descriptions,
+      hourlyRate: responseData[key].hourlyRate,
+      areas: responseData[key].areas
+      }
+      developers.push(developer)
+    }
+    console.log(developers)
+
+    context.commit('setDevelopers', developers);
   }
 };

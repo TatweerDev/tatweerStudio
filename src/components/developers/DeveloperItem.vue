@@ -6,8 +6,8 @@
       <base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>
     </div>
     <div class="actions">
-      <base-button link :to="coachContactLink">Contact</base-button>
-      <base-button mode="pure" link :to="coachDetailsLink">View Detals</base-button>
+      <base-button link :to="devContactLink">Contact</base-button>
+      <base-button mode="pure" link :to="devDetailsLink">View Detals</base-button>
     </div>
   </li>
 </template>
@@ -26,10 +26,10 @@ export default {
     fullName() {
       return this.firstName + ' ' + this.lastName;
     },
-    coachContactLink() {
+    devContactLink() {
       return this.$route.path + '/' + this.id + '/contact';
     },
-    coachDetailsLink() {
+    devDetailsLink() {
       return this.$route.path + '/' + this.id;
     }
   }
