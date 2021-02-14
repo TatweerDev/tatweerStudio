@@ -7,7 +7,7 @@
     </div>
     <div class="devs">
       <section>
-        <developer-filter @change-filter="setFilters"></developer-filter>
+        <developer-filter @change-filter="setFilters" ></developer-filter>
       </section>
       <section>
         <base-card>
