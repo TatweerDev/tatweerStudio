@@ -22,14 +22,15 @@ export default {
   box-shadow: 0 2px 18px rgba(184,116,15,1);
   padding: 1rem;
   margin: 2rem auto;
-  width: 35rem;
+  max-width: 40rem;
   background: rgba(17, 11, 1, 0.664);
+  min-width: 370px;
 }
 
-.desc {
-  background: linear-gradient(148deg, rgb(150, 95, 13) 0%, rgb(206, 173, 7) 100%);;
-  box-shadow: 0 2px 18px rgba(255, 255, 255, 0.7);
+.about {
+  background: linear-gradient(148deg, rgb(150, 95, 13) 0%, rgba(206, 173, 7, 0.7) 100%);;
+  box-shadow: none;
   color: #fff;
-  max-width: 25rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
 }
 </style>

@@ -30,7 +30,7 @@ html {
 
 body {
   margin: 0;
-
+  min-width: 330px;
   color: #fff;
   background: url("img/bg1.jpg")fixed center;
   background-repeat: no-repeat;

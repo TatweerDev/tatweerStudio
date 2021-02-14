@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
-    <div>
-      <base-card mode="desc">
+    <div class="description">
+      <base-card mode="about">
         <desc-item></desc-item>
       </base-card>
     </div>
-    <div>
+    <div class="devs">
       <section>
         <developer-filter @change-filter="setFilters"></developer-filter>
       </section>
@@ -15,9 +15,9 @@
             <base-button @click="loadDevelopers">Refresh</base-button>
             <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
           </div>
-          <ul >
+          <ul>
             <developer-item 
-              v-for="dev in developers"
+              v-for="dev in filteredDevs"
               :key="dev.id"
               :id="dev.id"
               :first-name="dev.firstName"
@@ -53,24 +53,23 @@ export default {
         backend: true,
         design: true,
         apps: true,
-      },
-      developers: this.$store.getters['devs/developers']
+      }
     }
   },
   computed: {
     filteredDevs() {
       const developers = this.$store.getters['devs/developers'];
       return developers.filter(dev => {
-        if (this.activeFilters.frontend && dev.areas.includes('frontend')) {
+        if (this.activeFilters.frontend && dev.areas.includes('Frontend')) {
           return true
         }
-        if (this.activeFilters.backend && dev.areas.includes('backend')) {
+        if (this.activeFilters.backend && dev.areas.includes('Backend')) {
           return true
         }
-        if (this.activeFilters.design && dev.areas.includes('design')) {
+        if (this.activeFilters.design && dev.areas.includes('Design')) {
           return true
         }
-        if (this.activeFilters.apps && dev.areas.includes('apps')) {
+        if (this.activeFilters.apps && dev.areas.includes('Apps')) {
           return true
         }
         return false
@@ -112,11 +111,55 @@ ul {
   display: flex;
   justify-content: space-between;
 }
+.description {
+  width: 28rem;
+}
+.devs {
+  width: 38rem;
+}
 
 .wrapper {
   display: flex;
   margin: 0 60px;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 1200px) {
+  .description {
+    width: 23rem;
+  }
+
+  .devs {
+    width: 30rem;
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .devs,
+  .description {
+    width: 40rem;
+    margin: 1rem auto;
+  }
+
+  .wrapper {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .devs,
+  .description {
+    width: auto;
+    margin: 1rem auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .wrapper {
+    margin: 0 20px;
+  }
 }
 
 </style>

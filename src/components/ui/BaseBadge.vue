@@ -25,22 +25,22 @@ export default {
   margin-right: 0.5rem;
 }
 
-.frontend {
+.Frontend {
   background: linear-gradient(120deg, rgba(255,255,255,1) 0%, rgba(242,197,100,1) 100%);
   color: #000;
 }
 
-.backend {
+.Backend {
   background: linear-gradient(270deg, rgba(184,116,15,1) 0%, rgba(247,208,8,1) 100%);
   color: white;
 }
 
-.design {
+.Design {
   background: linear-gradient(148deg, rgba(184,116,15,1) 0%, rgba(247,208,8,1) 100%);
   color: white;
 }
 
-.apps {
+.Apps {
   background: linear-gradient(270deg, rgba(0,110,23,1) 0%, rgba(0,255,67,1) 100%);
   color: white;
 }

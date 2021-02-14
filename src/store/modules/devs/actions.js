@@ -5,7 +5,7 @@ export default {
       firstName: data.first,
       lastName: data.last,
       description: data.desc,
-      // portfolio: data.portfolio,
+      portfolio: data.portfolio,
       hourlyRate: data.rate,
       areas: data.areas
     };
@@ -45,12 +45,11 @@ export default {
       lastName: responseData[key].lastName,
       description: responseData[key].descriptions,
       hourlyRate: responseData[key].hourlyRate,
-      areas: responseData[key].areas
+      areas: responseData[key].areas,
+      portfolio: responseData[key].portfolio
       }
       developers.push(developer)
     }
-    console.log(developers)
-
     context.commit('setDevelopers', developers);
   }
 };
