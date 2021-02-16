@@ -12,6 +12,6 @@
 
 <style scoped>
 a {
-  color: rgb(184,116,15);
+  color: rgb(243, 219, 4);
 }
 </style>

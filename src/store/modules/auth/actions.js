@@ -5,6 +5,7 @@ export default {
       body: JSON.stringify({
         username: payload.username,
         email: payload.emai,
+
         password: payload.password,
         returnSecureToken: true
       })

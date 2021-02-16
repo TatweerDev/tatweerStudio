@@ -15,10 +15,8 @@
     </section>
     <section v-if="!isShown">
       <base-card>
-        <header>
           <h2>If you intersted - contact me now!</h2>
           <base-button @click="showForm">Contact</base-button>
-        </header>
         <router-view></router-view>
       </base-card>
     </section>

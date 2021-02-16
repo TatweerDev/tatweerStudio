@@ -1,6 +1,7 @@
 <template>
   <div>
     <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+
       <p>{{ error }}</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Authenticating..." fixed>
@@ -22,12 +23,14 @@
         <base-button>Signup</base-button>
         <!-- <base-button>{{ submitButtonCaption }}</base-button>
         <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->
+
       </form>
     </base-card>
   </div>
 </template>
 
 <script>
+
 import BaseButton from '../../components/ui/BaseButton.vue';
 export default {
   components: { BaseButton },
@@ -39,6 +42,7 @@ export default {
       mode: 'login',
       isLoading: false,
       error: null,
+
     };
   },
   computed: {

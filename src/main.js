@@ -10,6 +10,7 @@ import BaseDialog from './components/ui/BaseDialog.vue';
 import BaseSpinner from './components/ui/BaseSpinner.vue';
 import LottieAnimation from './assets/LotieFile.vue';
 
+
 const app = createApp(App);
 
 app.use(router);
@@ -21,5 +22,6 @@ app.component('base-badge', BaseBadge);
 app.component('base-dialog', BaseDialog);
 app.component('base-spinner', BaseSpinner);
 app.component('lottie', LottieAnimation);
+
 
 app.mount('#app');

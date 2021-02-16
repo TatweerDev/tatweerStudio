@@ -19,6 +19,7 @@ export default {
     saveData(data) {
       this.$store.dispatch('devs/registerDeveloper', data);
       this.$router.replace('/devs');
+      console.log(data)
     }
   }
 }

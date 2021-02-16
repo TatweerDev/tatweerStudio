@@ -80,7 +80,7 @@ export default {
       })
     },
     hasDevelopers() {
-      return this.$store.getters['devs/hasDevelopers'];
+      return !this.isLoading && this.$store.getters['devs/hasDevelopers'];
     },
      isDev() {
       return this.$store.getters['devs/isDev'];

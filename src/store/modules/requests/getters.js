@@ -1,8 +1,9 @@
 export default {
-  requests(state) {
-    return state.requests;
+  requests(state, _, _2, rootGetters) {
+    const developerId = rootGetters.userId;
+    return state.requests.filter(req => req.developerId === developerId);
   },
-  hasRequsets(state) {
-    return state.requests && state.requests.length > 0;
+  hasRequsets(_, getters) {
+    return getters.requests && getters.requests.length > 0;
   }
 };

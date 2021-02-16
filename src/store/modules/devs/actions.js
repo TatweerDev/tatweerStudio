@@ -49,7 +49,6 @@ export default {
       portfolio: responseData[key].portfolio
       }
       developers.push(developer)
-      console.log(developers)
     }
     context.commit('setDevelopers', developers);
   }
