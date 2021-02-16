@@ -15,6 +15,9 @@
             <base-button @click="loadDevelopers">Refresh</base-button>
             <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
           </div>
+          <div v-if="isLoading">
+            <base-spinner></base-spinner>
+          </div>
           <ul>
             <developer-item 
               v-for="dev in filteredDevs"
@@ -48,6 +51,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -90,11 +94,9 @@ export default {
       this.activeFilters = updatedFilters;
     },
     async loadDevelopers() {
-      try {
-        await this.$store.dispatch('devs/loadDevelopers');
-      } catch (error) {
-        this.error = error.message || 'Something went wrong'
-      }
+      this.isLoading = true;
+      await this.$store.dispatch('devs/loadDevelopers');
+      this.isLoading = false;
     }
   }
 }

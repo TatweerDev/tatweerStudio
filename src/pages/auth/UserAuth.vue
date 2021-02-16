@@ -9,10 +9,6 @@
     <base-card>
       <form @submit.prevent="submitForm">
         <div class="form-control">
-          <label for="username">Name</label>
-          <input type="text" id="username" v-model.trim="username" />
-        </div>
-        <div class="form-control">
           <label for="email">E-Mail</label>
           <input type="email" id="email" v-model.trim="email" />
         </div>
@@ -37,7 +33,6 @@ export default {
   components: { BaseButton },
   data() {
     return {
-      username: '',
       email: '',
       password: '',
       formIsValid: true,

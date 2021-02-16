@@ -28,7 +28,7 @@ export default {
     });
   },
   async loadDevelopers(context) {
-    const response = await fetch('http://192.168.1.2:8001/api/v1/');
+    const response = await fetch('https://api.barbium.com/api/v1/');
 
     const responseData = await response.json();
 
@@ -49,6 +49,7 @@ export default {
       portfolio: responseData[key].portfolio
       }
       developers.push(developer)
+      console.log(developers)
     }
     context.commit('setDevelopers', developers);
   }
