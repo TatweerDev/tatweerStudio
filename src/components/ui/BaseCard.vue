@@ -1,8 +1,20 @@
 <template>
-  <div class="card">
+  <div class="card" :class="mode">
     <slot></slot>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    mode: {
+      type: String,
+      required: false,
+      default: null
+    }
+  }
+}
+</script>
 
 <style scoped>
 .card {
@@ -11,6 +23,14 @@
   padding: 1rem;
   margin: 2rem auto;
   max-width: 40rem;
-  background-color: rgba(17, 11, 1, 0.664);
+  background: rgba(17, 11, 1, 0.664);
+  min-width: 370px;
+}
+
+.about {
+  background: linear-gradient(148deg, rgb(150, 95, 13) 0%, rgba(206, 173, 7, 0.7) 100%);;
+  box-shadow: none;
+  color: #fff;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
 }
 </style>

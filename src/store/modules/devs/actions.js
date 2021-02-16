@@ -9,16 +9,16 @@ export default {
       hourlyRate: data.rate,
       areas: data.areas
     };
-
-    const response = await fetch(`https://tatweer-studio-default-rtdb.firebaseio.com/developers/${userId}.json`, {
-      method: 'PUT',
+    const response = await fetch ('https://dev.barbium.com/api/v1/id.json', {
+      method: 'POST',
       body: JSON.stringify(devData)
     });
 
-    // const responseData = await response.json();
+    const responseData = await response.json();
+    console.log(responseData);
 
-    if (!response.ok) {
-      //error
+    if (!response.ok)  {
+      // error...
     }
 
     context.commit('registerDeveloper', {
@@ -26,39 +26,29 @@ export default {
       id: userId
     });
   },
-  async loadDevelopers(context, payload) {
-    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
-      return;
-    }
+  async loadDevelopers(context) {
+    const response = await fetch('https://api.barbium.com/api/v1/');
 
-    const response = await fetch(
-      `https://tatweer-studio-default-rtdb.firebaseio.com/developers.json`
-      
-      // 'http://1dfa8511f31c.ngrok.io/api/v1/dev/'
-    );
     const responseData = await response.json();
-    console.log(responseData)
 
     if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to send');
-      throw error;
+      throw new Error('Failed to get data')
     }
 
     const developers = [];
 
-    for (const key in responseData) {
+    for(const key in responseData) {
       const developer = {
-        id: key,
-        firstName: responseData[key].firstName,
-        lastName: responseData[key].lastName,
-        description: responseData[key].description,
-        portfolio: responseData[key].portfolio,
-        hourlyRate: responseData[key].hourlyRate,
-        areas: responseData[key].areas
-      };
-      developers.push(developer);
+      id: key,
+      firstName: responseData[key].firstName,
+      lastName: responseData[key].lastName,
+      description: responseData[key].descriptions,
+      hourlyRate: responseData[key].hourlyRate,
+      areas: responseData[key].areas,
+      portfolio: responseData[key].portfolio
+      }
+      developers.push(developer)
     }
     context.commit('setDevelopers', developers);
-    context.commit('setFatchTimestamp');
   }
 };

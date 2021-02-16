@@ -14,7 +14,6 @@ export default {
   components: {
     TheHeader
   }
-  
 }
 </script>
 
@@ -31,12 +30,11 @@ html {
 
 body {
   margin: 0;
-
+  min-width: 330px;
   color: #fff;
-  background-image: url("img/bg1.jpg");
+  background: url("img/bg1.jpg")fixed center;
   background-repeat: no-repeat;
-  background-position: fixed !important;
-  background-size: 100%;
+  background-size: cover;
   background-color: #000;
 }
 

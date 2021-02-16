@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error ocured" @close="handleError">
+    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Authenticating..." fixed>
@@ -19,18 +19,19 @@
         <p
           v-if="!formIsValid"
         >Please enter a valid email and password (must be at least 6 characters long).</p>
-        <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button>
+        <base-button>Signup</base-button>
+        <!-- <base-button>{{ submitButtonCaption }}</base-button>
+        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->s
       </form>
     </base-card>
   </div>
 </template>
 
 <script>
-import BaseDialog from '../../components/ui/BaseDialog.vue';
-import BaseSpinner from '../../components/ui/BaseSpinner.vue';
+
+import BaseButton from '../../components/ui/BaseButton.vue';
 export default {
-  components: { BaseDialog, BaseSpinner },
+  components: { BaseButton },
   data() {
     return {
       email: '',
@@ -38,7 +39,7 @@ export default {
       formIsValid: true,
       mode: 'login',
       isLoading: false,
-      error: null
+      error: null,
     };
   },
   computed: {
@@ -60,33 +61,45 @@ export default {
   methods: {
     async submitForm() {
       this.formIsValid = true;
-      if (
-        this.email === '' ||
-        !this.email.includes('@') ||
-        this.password.length < 6
-      ) {
-        this.formIsValid = false;
-        return;
-      }
+      // if (
+      //   this.email === '' ||
+      //   !this.email.includes('@') ||
+      //   this.password.length < 6
+      // ) {
+      //   this.formIsValid = false;
+      //   return;
+      // }
 
-      this.isLoading = true;
+      // this.isLoading = true;
 
-      const actionPayload = {
+      // const actionPayload = {
+      //   username: this.username,
+      //   email: this.email,
+      //   password: this.password,
+      // };
+
+      // try {
+      //   if (this.mode === 'login') {
+      //     await this.$store.dispatch('login', actionPayload);
+      //     console.log(actionPayload);
+      //   } else {
+      //     console.log(actionPayload);
+      //     await this.$store.dispatch('signup', actionPayload);
+      //   }
+      //   const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+      //   this.$router.replace(redirectUrl);
+      // } catch (err) {
+      //   this.error = err.message || 'Failed to authenticate, try later.';
+      // }
+
+      // this.isLoading = false;
+      const acivePayload = {
+        username: this.username,
         email: this.email,
         password: this.password
       }
-
-      try {
-        if (this.mode === 'login') {
-          await this.$store.dispatch('login', actionPayload)
-        } else {
-          await this.$store.dispatch('signup', actionPayload)
-        }
-      } catch (err) {
-        this.error = err.message || 'Failed to authenicate...'
-      }      
-
-      this.isLoading = false;
+        console.log(acivePayload);
+       await this.$store.dispatch('signup', acivePayload);
     },
     switchAuthMode() {
       if (this.mode === 'login') {
@@ -97,7 +110,7 @@ export default {
     },
     handleError() {
       this.error = null;
-    }
+    },
   },
 };
 </script>
@@ -125,14 +138,12 @@ textarea {
   font: inherit;
   border: 1px solid #ccc;
   padding: 0.15rem;
-  margin-bottom: 0.5rem;
-  background-color: #ffffff8e;
 }
 
 input:focus,
 textarea:focus {
-  border-color: #c5b314;
-  background-color: #fdfcafc4;
+  border-color: rgb(184,116,15);
+  background-color: #ffffff9f;
   outline: none;
 }
 </style>
