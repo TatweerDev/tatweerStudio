@@ -9,7 +9,6 @@ export default {
       hourlyRate: data.rate,
       areas: data.areas
     };
-
     const response = await fetch ('https://dev.barbium.com/api/v1/id.json', {
       method: 'POST',
       body: JSON.stringify(devData)

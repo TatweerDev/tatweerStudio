@@ -7,7 +7,6 @@ import RequestsRecieved from './pages/requests/RequestsRecieved.vue'
 import UserAuth from './pages/auth/UserAuth.vue'
 import NotFound from './pages/NotFound.vue'
 
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [

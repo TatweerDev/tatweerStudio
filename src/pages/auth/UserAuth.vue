@@ -1,7 +1,6 @@
 <template>
   <div>
     <base-dialog :show="!!error" title="An error occurred" @close="handleError">
-
       <p>{{ error }}</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Authenticating..." fixed>
@@ -22,8 +21,7 @@
         >Please enter a valid email and password (must be at least 6 characters long).</p>
         <base-button>Signup</base-button>
         <!-- <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->
-
+        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->s
       </form>
     </base-card>
   </div>
@@ -42,7 +40,6 @@ export default {
       mode: 'login',
       isLoading: false,
       error: null,
-
     };
   },
   computed: {

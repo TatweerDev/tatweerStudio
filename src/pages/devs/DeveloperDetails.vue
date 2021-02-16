@@ -13,6 +13,7 @@
         <h3>Click here to see <a :href="portfolio">My portfolio</a></h3>
       </base-card>
     </section>
+<<<<<<< HEAD
     <section v-if="!isShown">
       <base-card>
           <h2>If you intersted - contact me now!</h2>
@@ -38,6 +39,17 @@
         </form>
       </base-card>
     </section>
+=======
+    <section>
+      <base-card>
+        <header>
+          <h2>If you intersted - contact me now!</h2>
+          <base-button link :to="contactLink">Contact</base-button>
+        </header>
+        <router-view></router-view>
+      </base-card>
+    </section>
+>>>>>>> main
   </div>
 </template>
 
