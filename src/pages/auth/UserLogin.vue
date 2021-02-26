@@ -3,7 +3,7 @@
     <base-dialog :show="!!error" title="An error occurred" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
-    <base-dialog :show="isLoading" title="Authenticating..." fixed>
+    <base-dialog :show="isLoading" title="Loging in..." fixed>
       <base-spinner></base-spinner>
     </base-dialog>
     <base-card>
@@ -13,25 +13,14 @@
           <input type="email" id="email" v-model.trim="email" />
         </div>
         <div class="form-control">
-          <label for="password1">Password</label>
-          <input type="password" id="password1" v-model.trim="password1" />
-        </div>
-        <div class="form-control">
-          <label for="password2">Confirm Password</label>
-          <input type="password" id="password2" v-model.trim="password2" />
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model.trim="password" />
         </div>
         <p
           v-if="!formIsValid"
         >Please enter a valid email and password (must be at least 8 characters long).</p>
-        <base-button>Sign up</base-button>
-        <!-- <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->
+        <base-button>Log In</base-button>
       </form>
-      <div>
-        <span>If you already signed on our site, just
-          <router-link to="/login">login instead</router-link>
-        </span>
-      </div>
     </base-card>
   </div>
 </template>
@@ -44,8 +33,7 @@ export default {
   data() {
     return {
       email: '',
-      password1: '',
-      password2: '',
+      password: '',
       formIsValid: true,
       isLoading: false,
       error: null,
@@ -57,8 +45,7 @@ export default {
       if (
         this.email === '' ||
         !this.email.includes('@') ||
-        this.password1.length < 6 ||
-        this.password2.length < 8
+        this.password.length < 8
       ) {
         this.formIsValid = false;
         return;
@@ -68,22 +55,18 @@ export default {
 
       const actionPayload = {
         email: this.email,
-        password1: this.password1,
-        password2: this.password2,
+        password: this.password,
       };
 
       try {
+        await this.$store.dispatch('login', actionPayload);
         console.log(actionPayload);
-        await this.$store.dispatch('signup', actionPayload);
-        
         const redirectUrl = '/' + (this.$route.query.redirect || 'devs');
         this.$router.replace(redirectUrl);
       } catch (err) {
-        this.isLoading = false;
+        console.log(actionPayload)
         this.error = err.message || 'Failed to authenticate, try later.';
       }
-
-      this.isLoading = false;
     },
     handleError() {
       this.error = null;

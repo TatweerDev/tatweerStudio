@@ -22,7 +22,7 @@ export default {
   border-radius: 5px;
   padding: 0.5rem 1.5rem;
   display: inline-block;
-  margin-right: 0.5rem;
+  margin: 0.5rem;
 }
 
 .Frontend {

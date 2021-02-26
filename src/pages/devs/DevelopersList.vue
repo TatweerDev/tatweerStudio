@@ -1,5 +1,9 @@
 <template>
   <div class="wrapper">
+    <base-scroll></base-scroll>
+    <base-dialog :v-show="!!error" title="An error occured" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
     <div class="description">
       <base-card mode="about">
         <desc-item></desc-item>
@@ -18,7 +22,7 @@
           <div v-if="isLoading">
             <base-spinner></base-spinner>
           </div>
-          <ul>
+          <ul v-else-if="hasDevelopers">
             <developer-item 
               v-for="dev in filteredDevs"
               :key="dev.id"
@@ -30,7 +34,7 @@
               >
             </developer-item>
           </ul>
-          <!-- <h3 v-else>There is no Developers found</h3> -->
+          <h3 v-else>There is no Developers found</h3>
         </base-card>
       </section>
     </div>
@@ -52,6 +56,8 @@ export default {
   data() {
     return {
       isLoading: false,
+      error: null,
+      scroll: false,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -87,7 +93,7 @@ export default {
     }
   },
   created() {
-    this.loadDevelopers()
+    this.loadDevelopers();
   },
   methods: {
     setFilters(updatedFilters) {
@@ -95,8 +101,15 @@ export default {
     },
     async loadDevelopers() {
       this.isLoading = true;
-      await this.$store.dispatch('devs/loadDevelopers');
+      try {
+        await this.$store.dispatch('devs/loadDevelopers');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong...(';
+      }      
       this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     }
   }
 }
@@ -108,6 +121,8 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+
 
 .controls {
   display: flex;
@@ -161,6 +176,12 @@ ul {
 @media screen and (max-width: 480px) {
   .wrapper {
     margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .wrapper {
+    margin: 0;
   }
 }
 

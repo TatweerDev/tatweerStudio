@@ -24,7 +24,7 @@ export default {
   margin: 2rem auto;
   max-width: 40rem;
   background: rgba(17, 11, 1, 0.664);
-  min-width: 370px;
+  min-width: 320px;
 }
 
 .about {
@@ -33,4 +33,5 @@ export default {
   color: #fff;
   padding: 1rem 1.5rem 1.5rem 1.5rem;
 }
+
 </style>

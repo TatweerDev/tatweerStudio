@@ -9,10 +9,13 @@
       </router-link>
       <ul class="nav__list">
         <li>
-          <router-link to="/devs">All developers</router-link>
+          <router-link to="/devs">All Developers</router-link>
         </li>
         <li>
-          <router-link to="/auth">Login</router-link>
+          <router-link to="/auth">Sign Up</router-link>
+        </li>
+        <li v-if="isAthenticated">
+          <router-link to="/auth">Log out</router-link>
         </li>
       </ul>
     </nav>
@@ -24,7 +27,12 @@ import LogoAnimaition from './LogoAnimation.vue'
 export default {
   components: {
     'logo-animation' : LogoAnimaition
-  }  
+  },
+  computed: {
+    isLogedIn() {
+      return this.$store.getters.isAthenticated;
+    }
+  }
 }
 </script>
 
