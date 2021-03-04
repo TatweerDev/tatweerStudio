@@ -53,18 +53,14 @@ export default {
 
       this.isLoading = true;
 
-      const actionPayload = {
-        email: this.email,
-        password: this.password,
-      };
-
       try {
-        await this.$store.dispatch('login', actionPayload);
-        console.log(actionPayload);
+        await this.$store.dispatch('login',{
+          email: this.email,
+          password: this.password,
+        });
         const redirectUrl = '/' + (this.$route.query.redirect || 'devs');
         this.$router.replace(redirectUrl);
       } catch (err) {
-        console.log(actionPayload)
         this.error = err.message || 'Failed to authenticate, try later.';
       }
     },

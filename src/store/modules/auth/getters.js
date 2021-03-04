@@ -5,6 +5,9 @@ export default {
   token(state) {
     return state.token;
   },
+  refreshToken(state) {
+    return state.refreshToken;
+  },
   isAthenticated(state) {
     return !!state.token;
   },

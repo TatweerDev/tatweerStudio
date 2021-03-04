@@ -1,7 +1,10 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+    <base-dialog :show="!!error" title="An error occurred" @close="handleClose">
       <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog :show="isSuccess" title="Success!" @close="handleRedirect">
+      <p>Thank you for registering. Check out your e-mail, and confirm authorisation. Then login</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Authenticating..." fixed>
       <base-spinner></base-spinner>
@@ -24,8 +27,6 @@
           v-if="!formIsValid"
         >Please enter a valid email and password (must be at least 8 characters long).</p>
         <base-button>Sign up</base-button>
-        <!-- <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button> -->
       </form>
       <div>
         <span>If you already signed on our site, just
@@ -49,6 +50,7 @@ export default {
       formIsValid: true,
       isLoading: false,
       error: null,
+      isSuccess: false
     };
   },
   methods: {
@@ -57,8 +59,8 @@ export default {
       if (
         this.email === '' ||
         !this.email.includes('@') ||
-        this.password1.length < 6 ||
-        this.password2.length < 8
+        this.password1.length < 8 ||
+        this.password1 !== this.password2
       ) {
         this.formIsValid = false;
         return;
@@ -66,18 +68,13 @@ export default {
 
       this.isLoading = true;
 
-      const actionPayload = {
-        email: this.email,
-        password1: this.password1,
-        password2: this.password2,
-      };
-
       try {
-        console.log(actionPayload);
-        await this.$store.dispatch('signup', actionPayload);
-        
-        const redirectUrl = '/' + (this.$route.query.redirect || 'devs');
-        this.$router.replace(redirectUrl);
+        await this.$store.dispatch('signup', {
+          email: this.email,
+          password: this.password1,
+          re_password: this.password2,
+        });
+        this.isSuccess = true;
       } catch (err) {
         this.isLoading = false;
         this.error = err.message || 'Failed to authenticate, try later.';
@@ -85,9 +82,14 @@ export default {
 
       this.isLoading = false;
     },
-    handleError() {
+    handleClose() {
       this.error = null;
     },
+    handleRedirect() {
+      this.isSuccess = false;
+      const redirectUrl = '/' + (this.$route.query.redirect || 'login');
+      this.$router.replace(redirectUrl);
+    }
   },
 };
 </script>

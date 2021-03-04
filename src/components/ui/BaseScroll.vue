@@ -15,6 +15,9 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
   methods: {
     scrollUp() {
       window.scrollTo({
@@ -24,7 +27,6 @@ export default {
       })
     },
     handleScroll() {
-      // console.log('works')
       if(window.pageYOffset >= 300) {
         this.isVisible = true;
       } else {

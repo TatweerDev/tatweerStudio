@@ -27,10 +27,10 @@ export default {
     });
   },
   async loadDevelopers(context) {
-    const response = await fetch('https://api.barbium.com/api/v1/');
+    const response = await fetch('https://tatweer.barbium.com/api/v1/');
 
     const responseData = await response.json();
-
+    console.log(responseData);
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch data');
       throw error;
@@ -41,15 +41,17 @@ export default {
     for(const key in responseData) {
       const developer = {
       id: key,
-      firstName: responseData[key].firstName,
-      lastName: responseData[key].lastName,
+      firstName: responseData[key].first_name,
+      lastName: responseData[key].last_name,
       description: responseData[key].descriptions,
-      hourlyRate: responseData[key].hourlyRate,
+      hourlyRate: responseData[key].hourly_rate,
       areas: responseData[key].areas,
       portfolio: responseData[key].portfolio
       }
+      console.log(developer)
       developers.push(developer)
     }
+    console.log()
     context.commit('setDevelopers', developers);
   }
 };

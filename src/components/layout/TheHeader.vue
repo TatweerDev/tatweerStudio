@@ -11,11 +11,11 @@
         <li>
           <router-link to="/devs">All Developers</router-link>
         </li>
-        <li>
+        <li v-if="!isLogedIn">
           <router-link to="/auth">Sign Up</router-link>
         </li>
-        <li v-if="isAthenticated">
-          <router-link to="/auth">Log out</router-link>
+        <li v-if="isLogedIn">
+          <base-button @click="logout" mode="header">log out </base-button>
         </li>
       </ul>
     </nav>
@@ -23,14 +23,22 @@
 </template>
 
 <script>
+import BaseButton from '../ui/BaseButton.vue';
 import LogoAnimaition from './LogoAnimation.vue'
 export default {
   components: {
-    'logo-animation' : LogoAnimaition
+    'logo-animation' : LogoAnimaition,
+    BaseButton
   },
   computed: {
     isLogedIn() {
       return this.$store.getters.isAthenticated;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      localStorage.clear();
     }
   }
 }

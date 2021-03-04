@@ -17,7 +17,7 @@
         <base-card>
           <div>
             <base-button @click="loadDevelopers">Refresh</base-button>
-            <base-button v-if="!isDev" link to="/register" mode="white">Register as a Developer</base-button>
+            <base-button v-if="isLoggedIn && !isDev && !isLoading" link to="/register" mode="white">Register as a Developer</base-button>
           </div>
           <div v-if="isLoading">
             <base-spinner></base-spinner>
@@ -67,6 +67,9 @@ export default {
     }
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAthenticated;
+    },
     filteredDevs() {
       const developers = this.$store.getters['devs/developers'];
       return developers.filter(dev => {

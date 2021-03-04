@@ -52,6 +52,22 @@ button:active {
   border-color: #b88703;
 }
 
+.header {
+  display: block;
+  color: #000;
+  align-items: center;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin: 0 0.5rem;
+  background-color: transparent;
+  border-radius: 0%;
+}
+
+.header:hover {
+  border: 1px solid #000;
+  background-color: transparent;
+}
+
 .pure {
   background-color: #b88703;
   color: #fff;
@@ -73,5 +89,11 @@ button:active {
 .outline:hover,
 .outline:active {
   background-color: #edd2ff;
+}
+
+@media screen and (max-width: 991px) {
+  .header {
+    font-size: 0.75rem;
+  }
 }
 </style>
