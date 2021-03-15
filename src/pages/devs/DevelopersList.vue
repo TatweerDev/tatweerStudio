@@ -16,8 +16,7 @@
       <section>
         <base-card>
           <div>
-            <base-button @click="loadDevelopers">Refresh</base-button>
-            <base-button v-if="isLoggedIn && !isDev && !isLoading" link to="/register" mode="white">Register as a Developer</base-button>
+            <base-button v-if="isLoggedIn && !isRegistered && !isLoading" link to="/register" mode="white">Register as a Developer</base-button>
           </div>
           <div v-if="isLoading">
             <base-spinner></base-spinner>
@@ -27,9 +26,9 @@
               v-for="dev in filteredDevs"
               :key="dev.id"
               :id="dev.id"
-              :first-name="dev.firstName"
-              :last-name="dev.lastName"
-              :rate="dev.hourlyRate"
+              :first-name="dev.first_name"
+              :last-name="dev.last_name"
+              :rate="dev.hourly_rate"
               :areas="dev.areas"
               >
             </developer-item>
@@ -91,8 +90,8 @@ export default {
     hasDevelopers() {
       return !this.isLoading && this.$store.getters['devs/hasDevelopers'];
     },
-     isDev() {
-      return this.$store.getters['devs/isDev'];
+     isRegistered() {
+      return this.$store.getters['devs/isRegistered'];
     }
   },
   created() {
@@ -108,7 +107,7 @@ export default {
         await this.$store.dispatch('devs/loadDevelopers');
       } catch (error) {
         this.error = error.message || 'Something went wrong...(';
-      }      
+      }
       this.isLoading = false;
     },
     handleError() {

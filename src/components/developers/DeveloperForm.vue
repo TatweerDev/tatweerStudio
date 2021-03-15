@@ -53,19 +53,19 @@
     <div class="form-control" :class="{invalid: !areas.isValid}">
       <h3>Areas of specialisation</h3>
       <div>
-        <input type="checkbox" id="frontend" value="frontend" v-model="areas.val" @blur="clearValidity('areas')">
+        <input type="checkbox" id="frontend" value="1" v-model="areas.val" @blur="clearValidity('areas')">
         <label for="frontend">Frontend development</label>
       </div>
       <div>
-        <input type="checkbox" id="backend" value="backend" v-model="areas.val" @blur="clearValidity('areas')">
+        <input type="checkbox" id="backend" value="2" v-model="areas.val" @blur="clearValidity('areas')">
         <label for="backend">Backend development</label>
       </div>
       <div>
-        <input type="checkbox" id="design" value="design" v-model="areas.val" @blur="clearValidity('areas')">
+        <input type="checkbox" id="design" value="3" v-model="areas.val" @blur="clearValidity('areas')">
         <label for="design">Interface  design</label>
       </div>
       <div>
-        <input type="checkbox" id="apps" value="apps" v-model="areas.val" @blur="clearValidity('areas')">
+        <input type="checkbox" id="apps" value="4" v-model="areas.val" @blur="clearValidity('areas')">
         <label for="apps">Appication development</label>
       </div>
       <p v-if="!areas.isValid">At least one expertise must be selected</p>
@@ -102,7 +102,7 @@ export default {
       },
       areas: {
         val: [],
-        isValid: true
+        isValid: true,
       },
       formIsValid: true
     }
@@ -146,12 +146,12 @@ export default {
       }
 
       const formData = {
-        first: this.firstName.val,
-        last: this.lastName.val,
-        desc: this.description.val,
+        first_name: this.firstName.val,
+        last_name: this.lastName.val,
+        descriptions: this.description.val,
         portfolio: this.portfolio.val,
-        rate: this.rate.val,
-        areas: this.areas.val
+        hourly_rate: this.rate.val,
+        areas: Object.values(this.areas.val)
       }
       this.$emit('save-data', formData);
     }

@@ -13,24 +13,39 @@ export default {
       })
     });
     const responseData = await response.json();
-    console.log(responseData);
 
     if (!response.ok)  {
-      console.log(responseData)
       const error = new Error(responseData.detail || 'Failed to connect with the server')
       throw error
     }
 
-    localStorage.setItem('acceess', responseData.access);
+    localStorage.setItem('access', responseData.access);
     localStorage.setItem('refreshToken', responseData.refresh);
 
-    console.log(responseData);
+    const response2 = await fetch('https://tatweer.barbium.com/auth/users/me/', {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `JWT ${localStorage.getItem('access')}`,
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    })
+    const responseData2 = await response2.json();
+
+    if (!response2.ok)  {
+      console.log(responseData2)
+      const error = new Error(responseData2.detail || 'Failed to connect with the server')
+      throw error
+    }
+
+    localStorage.setItem('id', responseData2.id);
     context.commit('setUser', {
-      token: responseData.access,
-      refreshToken: responseData.refresh
-    });
+        token: responseData.access,
+        refreshToken: responseData.refresh,
+        userId: responseData2.id
+      });
   },
-  async signup(context, payload) {
+  async signup(_, payload) {
     const response = await fetch('https://tatweer.barbium.com/auth/users/', {
       headers: {
         'Accept': 'application/json',
@@ -58,12 +73,12 @@ export default {
     }
 
     console.log(responseData);
-    context.commit('setUser', {
-      userId: responseData.key
-    });
+    // context.commit('setUser', {
+    //   userId: responseData.key
+    // });
   },
   tryLogin(context) {
-    const token = localStorage.getItem('acceess')
+    const token = localStorage.getItem('access')
     const refreshToken = localStorage.getItem('refreshToken')
 
     if(token && refreshToken) {

@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     fullName() {
-      return this.selectedDev.firstName + ' ' + this.selectedDev.lastName;
+      return this.selectedDev.first_name + ' ' + this.selectedDev.last_name;
     },
     contactLink() {
       return this.$route.path + '/contact';
@@ -86,13 +86,13 @@ export default {
       return this.selectedDev.areas;
     },
     rate() {
-      return this.selectedDev.hourlyRate;
+      return this.selectedDev.hourly_rate;
     },
     portfolio() {
       return this.selectedDev.portfolio;
     },
     description() {
-      return this.selectedDev.description;
+      return this.selectedDev.descriptions;
     }
   },
   created() {
