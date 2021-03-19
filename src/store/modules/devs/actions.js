@@ -7,9 +7,10 @@ export default {
       descriptions: data.descriptions,
       portfolio: data.portfolio,
       hourly_rate: data.hourly_rate,
-      areas: data.areas
+      areas: data.areas,
+      is_registered: true
     };
-    console.log(id)
+
     const response = await fetch (`https://tatweer.barbium.com/api/v1/${id}/`, {
       headers: {
         'Accept': 'application/json',
@@ -24,9 +25,11 @@ export default {
     console.log(responseData);
 
     if (!response.ok)  {
-      // error...
+      const error = new Error(responseData.message || 'Failed to fetch data');
+      throw error;
     }
 
+    localStorage.setItem('isRegistered', responseData.is_registered);
     context.commit('registerDeveloper', {
       ...devData,
       id: id
@@ -47,16 +50,17 @@ export default {
     for(const key in responseData) {
       const developer = {
       id: key,
+      userId: responseData[key].id,
       first_name: responseData[key].first_name,
       last_name: responseData[key].last_name,
       descriptions: responseData[key].descriptions,
       hourly_rate: responseData[key].hourly_rate,
       areas: responseData[key].areas,
-      portfolio: responseData[key].portfolio
+      portfolio: responseData[key].portfolio,
       }
       developers.push(developer)
     }
-    console.log(developers)
+
     context.commit('setDevelopers', developers);
   }
 };

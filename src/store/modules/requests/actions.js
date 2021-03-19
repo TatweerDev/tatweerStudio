@@ -2,14 +2,21 @@ export default {
   async contactDev(context, payload) {
     const newRequest = {
       userMail: payload.email,
-      message: payload.message
+      message: payload.message,
+      userId: payload.userId
     };
-    const response = await fetch(`https://tatweer-studio-default-rtdb.firebaseio.com/requests/${payload.developerId}.json`, {
+    const response = await fetch(`https://tatweer.barbium.com/api/v1/message/create/`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `JWT ${localStorage.getItem('access')}`,
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
       body: JSON.stringify(newRequest)
     });
 
     const responseData = await response.json();
+    console.log(responseData)
 
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to seng a message...');
@@ -17,14 +24,21 @@ export default {
     }
 
     newRequest.id = responseData.name;
-    newRequest.developerId = payload.developerId;
+    newRequest.userId = payload.userId;
 
     context.commit('addRequest', newRequest);
   },
   
   async fetchRequests(context) {
-    const developerId = context.rootGetters.userId;
-    const response = await fetch(`https://tatweer-studio-default-rtdb.firebaseio.com/requests/${developerId}.json`);
+    const userId = localStorage.getItem('id')
+    const response = await fetch(`https://tatweer.barbium.com/api/v1/${userId}/`, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `JWT ${localStorage.getItem('access')}`,
+        'Content-Type': 'application/json'
+      },
+      method: 'GET'
+    });
     const responseData = await response.json();
 
     if (!response.ok) {
@@ -32,14 +46,14 @@ export default {
       throw error;
     }
 
-    const requests = [];
+    const requests = responseData.user_message;
 
-    for (const key in responseData) {
+    for (const key in requests) {
       const request = {
         id: key,
-        developerId: developerId,
-        userMail: responseData[key].userMail,
-        message: responseData[key].message
+        userId: requests[key].id,
+        email: requests[key].email,
+        message: requests[key].message
       };
       requests.push(request);
     }

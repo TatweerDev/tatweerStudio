@@ -8,7 +8,7 @@ export default {
     return {
       lastFetch: null,
       isRegistered: false,
-    //   developers: [
+      developers: [],
     //     {
     //       id: 'd1',
     //       first_name: 'Anton',

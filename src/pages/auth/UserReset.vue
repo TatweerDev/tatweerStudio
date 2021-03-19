@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+    <base-dialog :show="!!error" title="An error occurred" @close="handleClose">
       <p>{{ error }}</p>
     </base-dialog>
     <base-dialog :show="isLoading" title="Loging in..." fixed>
@@ -9,23 +9,14 @@
     <base-card>
       <form @submit.prevent="submitForm">
         <div class="form-control">
-          <label for="email">E-Mail</label>
+          <label for="email">Enter your E-Mail</label>
           <input type="email" id="email" v-model.trim="email" />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model.trim="password" />
         </div>
         <p
           v-if="!formIsValid"
         >Please enter a valid email and password (must be at least 8 characters long).</p>
-        <base-button>Log In</base-button>
+        <base-button>Reset Password</base-button>
       </form>
-      <div>
-        <span>If you forgot your password click here to 
-          <router-link to="/reset">Reset</router-link>
-        </span>
-      </div>
     </base-card>
   </div>
 </template>
@@ -38,42 +29,37 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
       formIsValid: true,
       isLoading: false,
-      error: null,
-    };
+      error: null
+    }
   },
   methods: {
     async submitForm() {
       this.formIsValid = true;
-      if (
-        this.email === '' ||
-        !this.email.includes('@') ||
-        this.password.length < 8
-      ) {
+      if (this.email === '' || !this.email.includes('@')) 
+      {
         this.formIsValid = false;
-        return;
+        return
       }
 
       this.isLoading = true;
 
       try {
-        await this.$store.dispatch('login',{
-          email: this.email,
-          password: this.password,
+        await this.$store.dispatch('reset',{
+          email: this.email
         });
-        const redirectUrl = '/' + (this.$route.query.redirect || 'devs');
-        this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || 'Failed to authenticate, try later.';
+        this.isLoading = false
       }
+      this.isLoading = false
     },
-    handleError() {
+    handleClose() {
       this.error = null;
     },
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

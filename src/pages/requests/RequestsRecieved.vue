@@ -9,14 +9,15 @@
           <h2>Messages recieved</h2>
         </header>
         <base-spinner v-if="isLoading"></base-spinner>
-        <ul v-else-if="!hasRequests && !isLoading">
+        <ul v-if="hasRequests && !isLoading">
           <request-item
             v-for="req in recievedRequests"
-            :key="req.id"
-            :email="req.userMail"
+            :key="req.userId"
+            :email="req.email"
             :message="req.message"
-          ></request-item></ul>
-        <h3 v-if="hasRequests">You haven't recieved any mesages yet...</h3>
+          ></request-item>
+        </ul>
+        <h3 v-if="!hasRequests">You haven't recieved any mesages yet...</h3>
       </base-card>
     </section>
   </div>
@@ -42,7 +43,12 @@ export default {
       return this.$store.getters['requests/requests']
     },
     hasRequests() {
-      return this.$store.getters['requests/hasRequests'];
+      const req = this.$store.getters['requests/requests'];
+      if (req.length > 0) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   created() {
@@ -53,6 +59,7 @@ export default {
       this.isLoading = true;
       try {
         await this.$store.dispatch('requests/fetchRequests');
+        this.isLoading = false;
       } catch (error) {
         this.error = error.message || 'Something went wrong...'
       }

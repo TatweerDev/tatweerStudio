@@ -6,6 +6,7 @@ import DevRegistration from './pages/devs/DevRegistration.vue';
 import RequestsRecieved from './pages/requests/RequestsRecieved.vue';
 import UserAuth from './pages/auth/UserAuth.vue';
 import UserLogin from './pages/auth/UserLogin.vue';
+import UserReset from './pages/auth/UserReset.vue';
 import NotFound from './pages/NotFound.vue';
 
 const router = createRouter({
@@ -18,6 +19,7 @@ const router = createRouter({
     { path: '/requests', component: RequestsRecieved },
     { path: '/auth', component: UserAuth },
     { path: '/login', component: UserLogin },
+    { path: '/reset', component: UserReset },
     { path: '/:notFound(.*)', component: NotFound },
   ]
 });

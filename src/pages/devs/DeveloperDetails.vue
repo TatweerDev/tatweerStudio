@@ -3,7 +3,7 @@
     <section>
       <base-card>
         <h2>{{ fullName }}</h2>
-        <h3>${{ rate }}</h3>
+        <h3>${{ rate }} / hour</h3>
       </base-card>
     </section>
     <section>
@@ -48,9 +48,7 @@ export default {
   props: ['id'],
   data() {
     return {
-      selectedDev: this.$store.getters['devs/developers'].find(
-      developer => developer.id === this.id
-    ),
+      selectedDev: null,
       email: '',
       message: '',
       formIsvalid: true,
@@ -67,7 +65,7 @@ export default {
       this.$store.dispatch('requests/contactDev', {
         email: this.email,
         message: this.message,
-        coachId: this.$route.params.id
+        userId: this.selectedDev.userId
       });
       this.$router.replace('/devs')
     },

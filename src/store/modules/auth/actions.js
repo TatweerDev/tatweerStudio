@@ -13,6 +13,7 @@ export default {
       })
     });
     const responseData = await response.json();
+    console.log(responseData)
 
     if (!response.ok)  {
       const error = new Error(responseData.detail || 'Failed to connect with the server')
@@ -31,14 +32,14 @@ export default {
       method: 'GET'
     })
     const responseData2 = await response2.json();
-
+    console.log(responseData2)
     if (!response2.ok)  {
-      console.log(responseData2)
       const error = new Error(responseData2.detail || 'Failed to connect with the server')
       throw error
     }
 
     localStorage.setItem('id', responseData2.id);
+    
     context.commit('setUser', {
         token: responseData.access,
         refreshToken: responseData.refresh,
@@ -59,7 +60,6 @@ export default {
       })
     });
     const responseData = await response.json();
-    console.log(responseData)
 
     if (!response.ok)  {
       console.log(responseData)
@@ -67,6 +67,7 @@ export default {
         responseData.email ||
         responseData.password ||
         responseData.detail ||
+        responseData.message ||
         'Failed to connect with the server'
       )
       throw error
@@ -78,8 +79,8 @@ export default {
     // });
   },
   tryLogin(context) {
-    const token = localStorage.getItem('access')
-    const refreshToken = localStorage.getItem('refreshToken')
+    const token = localStorage.getItem('access');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if(token && refreshToken) {
       context.commit('setUser', {
@@ -92,7 +93,35 @@ export default {
     context.commit('setUser', {
       token: null,
       userId: null,
-      refreshToken: null
+      refreshToken: null,
+      is_registered: null
+    })
+  },
+  async reset(context, payload) {
+    const response = await fetch('https://tatweer.barbium.com/auth/users/reset_password/', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        email: payload.email
+      })
+    });
+
+    console.log(response)
+    const responseData = await response.json();
+    console.log(responseData)
+
+    if (!response.ok)  {
+      console.log(responseData)
+      const error = new Error(responseData.detail || 'Failed to connect with the server')
+      throw error
+    }
+
+    console.log(responseData)
+    context.commit('setUser', {
+      email: responseData.email,
     })
   }
 };

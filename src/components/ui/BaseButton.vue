@@ -64,7 +64,7 @@ button:active {
 }
 
 .header:hover {
-  border: 1px solid #000;
+  outline: 1px solid #000;
   background-color: transparent;
 }
 

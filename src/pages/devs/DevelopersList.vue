@@ -18,6 +18,9 @@
           <div>
             <base-button v-if="isLoggedIn && !isRegistered && !isLoading" link to="/register" mode="white">Register as a Developer</base-button>
           </div>
+          <div>
+            <base-button v-if="isLoggedIn && isRegistered && !isLoading" link to="/requests" mode="white">My messages</base-button>
+          </div>
           <div v-if="isLoading">
             <base-spinner></base-spinner>
           </div>
@@ -91,7 +94,7 @@ export default {
       return !this.isLoading && this.$store.getters['devs/hasDevelopers'];
     },
      isRegistered() {
-      return this.$store.getters['devs/isRegistered'];
+      return localStorage.isRegistered
     }
   },
   created() {
