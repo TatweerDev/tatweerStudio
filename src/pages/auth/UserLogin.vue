@@ -67,6 +67,7 @@ export default {
         this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || 'Failed to authenticate, try later.';
+        this.isLoading = false;
       }
     },
     handleError() {

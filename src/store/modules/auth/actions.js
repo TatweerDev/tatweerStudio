@@ -23,7 +23,7 @@ export default {
     localStorage.setItem('access', responseData.access);
     localStorage.setItem('refreshToken', responseData.refresh);
 
-    const response2 = await fetch('https://tatweer.barbium.com/auth/users/me/', {
+    const response2 = await fetch('https://tatweer.barbium.com/api/v1/me/', {
       headers: {
         'Accept': 'application/json',
         'Authorization': `JWT ${localStorage.getItem('access')}`,
@@ -31,6 +31,7 @@ export default {
       },
       method: 'GET'
     })
+
     const responseData2 = await response2.json();
     console.log(responseData2)
     if (!response2.ok)  {
@@ -38,7 +39,9 @@ export default {
       throw error
     }
 
+    console.log(responseData2)
     localStorage.setItem('id', responseData2.id);
+    localStorage.setItem('isRegistered', responseData2.is_registered);
     
     context.commit('setUser', {
         token: responseData.access,

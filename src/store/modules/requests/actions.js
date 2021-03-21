@@ -1,14 +1,13 @@
 export default {
   async contactDev(context, payload) {
     const newRequest = {
-      userMail: payload.email,
+      email: payload.email,
       message: payload.message,
-      userId: payload.userId
+      user: payload.userId
     };
     const response = await fetch(`https://tatweer.barbium.com/api/v1/message/create/`, {
       headers: {
         'Accept': 'application/json',
-        'Authorization': `JWT ${localStorage.getItem('access')}`,
         'Content-Type': 'application/json'
       },
       method: 'POST',
