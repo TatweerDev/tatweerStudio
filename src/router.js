@@ -12,9 +12,9 @@ import NotFound from './pages/NotFound.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', redirect: '/devs' },
-    { path: '/devs', component: DevList },
-    { path: '/devs/:id', component: DevDetails, props:true },
+    // { path: '/', redirect: '/devs' },
+    { path: '/', component: DevList },
+    { path: '/:id', component: DevDetails, props:true },
     { path: '/register', component: DevRegistration },
     { path: '/requests', component: RequestsRecieved },
     { path: '/auth', component: UserAuth },

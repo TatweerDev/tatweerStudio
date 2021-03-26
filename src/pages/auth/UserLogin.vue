@@ -63,8 +63,7 @@ export default {
           email: this.email,
           password: this.password,
         });
-        const redirectUrl = '/' + (this.$route.query.redirect || 'devs');
-        this.$router.replace(redirectUrl);
+        this.$router.replace('/');
       } catch (err) {
         this.error = err.message || 'Failed to authenticate, try later.';
         this.isLoading = false;

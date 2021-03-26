@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="details">
     <section>
       <base-card>
         <h2>{{ fullName }}</h2>
@@ -67,7 +67,7 @@ export default {
         message: this.message,
         userId: this.selectedDev.userId
       });
-      this.$router.replace('/devs')
+      this.$router.replace('/')
     },
     showForm() {
       this.isShown = true
@@ -76,9 +76,6 @@ export default {
   computed: {
     fullName() {
       return this.selectedDev.first_name + ' ' + this.selectedDev.last_name;
-    },
-    contactLink() {
-      return this.$route.path + '/contact';
     },
     areas() {
       return this.selectedDev.areas;
@@ -157,5 +154,9 @@ textarea:focus {
 
 .actions {
   text-align: center;
+}
+
+.details {
+  margin: 15px;
 }
 </style>

@@ -75,11 +75,6 @@ export default {
       )
       throw error
     }
-
-    console.log(responseData);
-    // context.commit('setUser', {
-    //   userId: responseData.key
-    // });
   },
   tryLogin(context) {
     const token = localStorage.getItem('access');
@@ -112,9 +107,7 @@ export default {
       })
     });
 
-    console.log(response)
     const responseData = await response.json();
-    console.log(responseData)
 
     if (!response.ok)  {
       console.log(responseData)
@@ -122,9 +115,6 @@ export default {
       throw error
     }
 
-    console.log(responseData)
-    context.commit('setUser', {
-      email: responseData.email,
-    })
+    console.log(responseData);
   }
 };

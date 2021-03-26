@@ -45,7 +45,6 @@ export default {
     }
 
     const developers = [];
-    console.log(responseData)
 
     for(const key in responseData) {
       const developer = {

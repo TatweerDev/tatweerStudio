@@ -9,7 +9,7 @@
       </router-link>
       <ul class="nav__list">
         <li>
-          <router-link to="/devs">All Developers</router-link>
+          <router-link to="/">All Developers</router-link>
         </li>
         <li v-if="!isLogedIn">
           <router-link to="/auth">Sign Up</router-link>

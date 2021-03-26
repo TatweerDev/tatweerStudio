@@ -25,11 +25,8 @@ export default {
     fullName() {
       return this.firstName + ' ' + this.lastName;
     },
-    devContactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
-    },
     devDetailsLink() {
-      return this.$route.path + '/' + this.id;
+      return this.$route.path + this.id;
     }
   }
 }

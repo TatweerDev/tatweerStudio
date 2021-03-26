@@ -97,7 +97,7 @@ export default {
       return localStorage.isRegistered
     }
   },
-  created() {
+  mounted() {
     this.loadDevelopers();
   },
   methods: {
